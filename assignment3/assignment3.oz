@@ -47,3 +47,26 @@ in
    {Browse {Drop [2 3 4] 2}}
 end
 
+%------------- PROBL. 4:
+local
+   fun {Position Xs Y P}
+      case Xs
+      of nil then 0 % return 0 if Y does not occur in Xs
+      [] H|T then
+	 if Y == H then
+	    P
+	 else
+	    {Position T Y P+1}
+	 end
+	 
+      end
+   end
+in
+   {Browse {Position [2 3 4] 4 1}}
+end
+
+
+
+
+
+
