@@ -47,6 +47,35 @@ in
    {Browse {Drop [2 3 4] 2}}
 end
 
+%------------- PROBL. 3:
+% ZIP/ UNZIP
+% assume the lists have equal sizes
+local
+   fun {Zip L1 L2}
+      case L1#L2
+      of nil#nil then nil
+      [] (H1|T1)#(H2|T2) then
+	 (H1#H2)|{Zip T1 T2}
+      end
+   end
+
+   fun {Unzip L}
+      case L
+      of nil then nil#nil
+      [] (H1#H2)|T then
+	 T1#T2 = {Unzip T} in
+	 (H1|T1)#(H2|T2)
+      end
+   end
+in
+   % input: pair of lists [a b c]#[1 2 3]
+   % output: list of pairs  [a#1 b#2 c#3]
+   {Browse {Zip [a b c] [1 2 3]}}
+   % input: list of pairs [a#1 b#2 c#3]
+   % output: pair of lists [a b c]#[1 2 3]
+   {Browse {Unzip [a#1 b#2 c#3]}}
+end
+
 %------------- PROBL. 4:
 local
    fun {Position Xs Y P}
@@ -65,8 +94,18 @@ in
    {Browse {Position [2 3 4] 4 1}}
 end
 
+%------- PROBL. 5: ARITHMETIC EXPRESSIONS EVALUATION
+% An arithmetic expression can be represented using an AST
+% AST constructed from tuples
+declare
+fun {Eval Expr}
+   case Expr
+   of int(N) then N
+   [] mul(X Y) then
+      {Eval X} * {Eval Y}
+   [] add(X Y) then
+      {Eval X} + {Eval Y}
+   end
+end
 
-
-
-
-
+{Browse {Eval add(int(1) mul(int(3) int(4)))}}
